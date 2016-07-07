@@ -28,10 +28,16 @@ restService.post('/webhook', function (req, res) {
                 if (requestBody.result.action) {
                     if(requestBody.result.action == "getTotalCost")
                     {
+                        var num = parseInt(requestBody.result.parameters.number);
                         var num1 = parseInt(requestBody.result.parameters.number1);
                         var num2 = parseInt(requestBody.result.parameters.number2);
-                        var cost = num1 * num2;
-                        speech += cost;
+                        var ice = requestBody.result.parameters.ice;
+                        var ingredients =requestBody.result.parameters.ingredients;
+                        var drinkname =requestBody.result.parameters.name;
+                        var cost = num * num2;
+                        
+                        var msg = "So, your order is "+ num +" "+ drinkname +" with "+ ingredients + "ingredient and "+ ice + " ice. This would be a total of "+ cost +" including taxes & 10% gratuity. Should i confirm?"
+                        speech = msg;
                     }                    
                 }
             }
