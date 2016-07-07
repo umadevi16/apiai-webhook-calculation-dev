@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const restService = express();
 restService.use(bodyParser.json());
 
-restService.post('/hook', function (req, res) {
+restService.post('/webhook', function (req, res) {
 
     console.log('hook request');
 
@@ -30,10 +30,9 @@ restService.post('/hook', function (req, res) {
                     {
                         var num1 = parseInt(requestBody.result.parameters.number1);
                         var num2 = parseInt(requestBody.result.parameters.number2);
-                        var cost = num1 + num2;
-                        speech += 'totalCost: ' + cost;
-                    }
-                    speech += 'action: ' + requestBody.result.action;
+                        var cost = num1 * num2;
+                        speech += cost;
+                    }                    
                 }
             }
         }
@@ -43,7 +42,7 @@ restService.post('/hook', function (req, res) {
         return res.json({
             speech: speech,
             displayText: speech,
-            source: 'apiai-webhook-sample'
+            source: 'apiai-webhook-calculation-sample'
         });
     } catch (err) {
         console.error("Can't process request", err);
