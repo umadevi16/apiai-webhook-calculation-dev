@@ -36,7 +36,7 @@ restService.post('/webhook', function (req, res) {
                         var drinkname =requestBody.result.parameters.name;
                         var cost = num * num2;
                         
-                        var msg = "So, your order is "+ num +" "+ drinkname +" with "+ ingredients + "ingredient and "+ ice + " ice. This would be a total of "+"$ " +cost +" including taxes & 10% gratuity. Should i confirm?"
+                        var msg = "So, your order is "+ num +" "+ drinkname +" with "+ ingredients + "ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
                         speech = msg;
                     }                    
                 }
