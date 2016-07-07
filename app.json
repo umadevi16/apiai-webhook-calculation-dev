@@ -1,0 +1,7 @@
+{
+  "name": "API.AI webhook calculation demonstration",
+  "description": "API.AI webhook calculation demonstration",
+  "repository": "https://github.com/dineshgouttam/apiai-webhook-calculation-sample",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["api.ai", "natural language"]
+}
