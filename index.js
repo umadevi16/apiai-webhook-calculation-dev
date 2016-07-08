@@ -13,6 +13,7 @@ restService.post('/webhook', function (req, res) {
 
     try {
         var speech = 'empty speech';
+        var data = {};
         var drinkItems = {"Tropical Crush": "10", "Mango Tango Crush": "8","Lemon Crush": "6","Lychee Crush": "9"}; 
         var specialItems = {"Chocolate Shake": "15", "Vanilla Shake": "6"};
 
@@ -49,11 +50,15 @@ restService.post('/webhook', function (req, res) {
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
                         speech = "1) Tropical Crush 2) Lychee Crush 3) Mango Tango Crush 4) Lemon Crush";
-                    }          
+                        var slack_message = {
+                            "text": "Tropical Crush \nMango Tango Crush \nLemon Crush \nLychee Crush"
+                        }
+                        data = {"slack": slack_message};
+                    }   
                     else if(requestBody.result.action == "getSpecialMenu")
                     {
                         speech = "1) Chocolate Shake 2) Vanilla Shake";
-                    }        
+                    }                  
                 }
             }
         }
@@ -63,6 +68,7 @@ restService.post('/webhook', function (req, res) {
         return res.json({
             speech: speech,
             displayText: speech,
+            data: data,
             source: 'apiai-webhook-calculation-sample'
         });
     } catch (err) {
