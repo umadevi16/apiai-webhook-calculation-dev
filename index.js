@@ -46,7 +46,7 @@ restService.post('/webhook', function (req, res) {
                     }    
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
-                        speech = "Tropical Crush, Mango Tango Crush, Lemon Crush, Lychee Crush";
+                        speech = "Tropical Crush \nMango Tango Crush \nLemon Crush \nLychee Crush";
                         var slack_message = {
                             "text": "Tropical Crush \nMango Tango Crush \nLemon Crush \nLychee Crush"
                         }
