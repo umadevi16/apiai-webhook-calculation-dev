@@ -62,7 +62,7 @@ restService.post('/webhook', function (req, res) {
                     {
                         speech = "Today's special menu: 1) Chocolate Shake 2) Vanilla Shake";
                         slack_message = {
-                            "text": "Today's special menu: \n1) Chocolate Shake 2) Vanilla Shake"
+                            "text": "Today's special menu: \n1) Chocolate Shake \n2) Vanilla Shake"
                         }  
                     }                  
                     data = {"slack": slack_message};
