@@ -14,7 +14,7 @@ restService.post('/webhook', function (req, res) {
     try {
         var speech = 'empty speech';
         var data = {};
-        var drinkPrice = {"Tropical Crust": "10", "Mango Tango Crust": "8","Lemon Crust": "6.2","Lychee Crust": "9"}; 
+        var drinkPrice = {"Tropical Crush": "10", "Mango Tango Crush": "8","Lemon Crush": "6.2","Lychee Crush": "9"}; 
 
         if (req.body) {
             var requestBody = req.body;
