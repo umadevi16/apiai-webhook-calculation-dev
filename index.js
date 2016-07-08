@@ -13,6 +13,8 @@ restService.post('/webhook', function (req, res) {
 
     try {
         var speech = 'empty speech';
+        var data = {};
+        var drinkPrice = {"Tropical Crust": "10", "Mango Tango Crust": "8","Lemon Crust": "6.2","Lychee Crust": "9"}; 
 
         if (req.body) {
             var requestBody = req.body;
@@ -29,16 +31,27 @@ restService.post('/webhook', function (req, res) {
                     if(requestBody.result.action == "getTotalCost")
                     {
                         var num = parseInt(requestBody.result.parameters.number);
-                        var num1 = parseInt(requestBody.result.parameters.number1);
-                        var num2 = parseInt(requestBody.result.parameters.number2);
                         var ice = requestBody.result.parameters.ice;
                         var ingredients =requestBody.result.parameters.ingredients;
                         var drinkname =requestBody.result.parameters.name;
-                        var cost = num * num2;
+                        var cost = 0;
+
+                        if (drinkname in drinkPrice)
+                        {
+                            cost = num * parseInt(drinkname[drinkname]);
+                        }
                         
-                        var msg = "So, your order is "+ num +" "+ drinkname +" with "+ ingredients + "ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
+                        var msg = "So, your order is "+ num +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
                         speech = msg;
-                    }                    
+                    }    
+                    else if(requestBody.result.action == "getDrinksMenu")
+                    {
+                        speech = "Tropical Crush, Mango Tango Crush, Lemon Crush, Lychee Crush";
+                        var slack_message = {
+                            "text": "Tropical Crush \nMango Tango Crush \nLemon Crush \nLychee Crush"
+                        }
+                        data = {"slack": slack_message};
+                    }                
                 }
             }
         }
@@ -48,6 +61,7 @@ restService.post('/webhook', function (req, res) {
         return res.json({
             speech: speech,
             displayText: speech,
+            data: data,
             source: 'apiai-webhook-calculation-sample'
         });
     } catch (err) {
