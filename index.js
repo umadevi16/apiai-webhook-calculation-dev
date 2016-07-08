@@ -14,6 +14,7 @@ restService.post('/webhook', function (req, res) {
     try {
         var speech = 'empty speech';
         var data = {};
+        var slack_message = {};
         var drinkItems = {"Tropical Crush": "10", "Mango Tango Crush": "8","Lemon Crush": "6","Lychee Crush": "9"}; 
         var specialItems = {"Chocolate Shake": "15", "Vanilla Shake": "6"};
 
@@ -44,21 +45,27 @@ restService.post('/webhook', function (req, res) {
                             cost = quantity * parseInt(specialItems[drinkname]);
                         }
                         
-                        var msg = "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
+                        var msg = "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?";
                         speech = msg;
+                        slack_message = {
+                            "text": "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
+                        }
                     }    
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
                         speech = "1) Tropical Crush 2) Lychee Crush 3) Mango Tango Crush 4) Lemon Crush";
-                        var slack_message = {
-                            "text": "Tropical Crush \nMango Tango Crush \nLemon Crush \nLychee Crush"
-                        }
-                        data = {"slack": slack_message};
+                        slack_message = {
+                            "text": "What can I get for you? \n1) Tropical Crush \n2) Mango Tango Crush \n3) Lemon Crush \n4) Lychee Crush"
+                        }                        
                     }   
                     else if(requestBody.result.action == "getSpecialMenu")
                     {
-                        speech = "1) Chocolate Shake 2) Vanilla Shake";
+                        speech = "Today's special menu: 1) Chocolate Shake 2) Vanilla Shake";
+                        slack_message = {
+                            "text": "Today's special menu: \n1) Chocolate Shake 2) Vanilla Shake"
+                        }  
                     }                  
+                    data = {"slack": slack_message};
                 }
             }
         }
