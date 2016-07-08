@@ -13,7 +13,6 @@ restService.post('/webhook', function (req, res) {
 
     try {
         var speech = 'empty speech';
-        var data = {};
         var drinkPrice = {"Tropical Crush": "10", "Mango Tango Crush": "8","Lemon Crush": "6.2","Lychee Crush": "9"}; 
 
         if (req.body) {
@@ -34,12 +33,7 @@ restService.post('/webhook', function (req, res) {
                         var ice = requestBody.result.parameters.ice;
                         var ingredients =requestBody.result.parameters.ingredients;
                         var drinkname =requestBody.result.parameters.name;
-                        var cost = 0;
-
-                        if (drinkname in drinkPrice)
-                        {
-                            cost = num * parseInt(drinkname[drinkname]);
-                        }
+                        var cost = num * parseInt(drinkPrice[drinkname]);
                         
                         var msg = "So, your order is "+ num +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
                         speech = msg;
@@ -47,10 +41,6 @@ restService.post('/webhook', function (req, res) {
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
                         speech = "Tropical Crush \nMango Tango Crush \nLemon Crush \nLychee Crush";
-                        var slack_message = {
-                            "text": "Tropical Crush \nMango Tango Crush \nLemon Crush \nLychee Crush"
-                        }
-                        data = {"slack": slack_message};
                     }                
                 }
             }
@@ -61,7 +51,6 @@ restService.post('/webhook', function (req, res) {
         return res.json({
             speech: speech,
             displayText: speech,
-            data: data,
             source: 'apiai-webhook-calculation-sample'
         });
     } catch (err) {
