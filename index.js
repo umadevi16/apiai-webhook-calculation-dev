@@ -13,7 +13,8 @@ restService.post('/webhook', function (req, res) {
 
     try {
         var speech = 'empty speech';
-        var drinkPrice = {"Tropical Crush": "10", "Mango Tango Crush": "8","Lemon Crush": "6.2","Lychee Crush": "9"}; 
+        var drinkItems = {"Tropical Crush": "10", "Mango Tango Crush": "8","Lemon Crush": "6","Lychee Crush": "9"}; 
+        var specialItems = {"Chocolate Shake": "15", "Vanilla Shake": "6"};
 
         if (req.body) {
             var requestBody = req.body;
@@ -29,19 +30,30 @@ restService.post('/webhook', function (req, res) {
                 if (requestBody.result.action) {
                     if(requestBody.result.action == "getTotalCost")
                     {
-                        var num = parseInt(requestBody.result.parameters.number);
+                        var quantity = parseInt(requestBody.result.parameters.number);
                         var ice = requestBody.result.parameters.ice;
                         var ingredients =requestBody.result.parameters.ingredients;
                         var drinkname =requestBody.result.parameters.name;
-                        var cost = num * parseInt(drinkPrice[drinkname]);
+                        var cost = 0;
+
+                        if(drinkname in drinkItems){
+                            cost = quantity * parseInt(drinkItems[drinkname]);
+                        }
+                        else {
+                            cost = quantity * parseInt(specialItems[drinkname]);
+                        }
                         
-                        var msg = "So, your order is "+ num +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
+                        var msg = "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
                         speech = msg;
                     }    
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
-                        speech = "Tropical Crush \nMango Tango Crush \nLemon Crush \nLychee Crush";
-                    }                
+                        speech = "1) Tropical Crush 2) Lychee Crush 3) Mango Tango Crush 4) Lemon Crush";
+                    }          
+                    else if(requestBody.result.action == "getSpecialMenu")
+                    {
+                        speech = "1) Chocolate Shake 2) Vanilla Shake";
+                    }        
                 }
             }
         }
