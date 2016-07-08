@@ -16,7 +16,7 @@ restService.post('/webhook', function (req, res) {
         var data = {};
         var slack_message = {};
         var drinkItems = {"Tropical Crush": "10", "Mango Tango Crush": "8","Lemon Crush": "6","Lychee Crush": "9"}; 
-        var specialItems = {"Chocolate Shake": "15", "Vanilla Shake": "6"};
+        var specialItems = {"Blueberry Crush": "15", "Mojito": "6"};
 
         if (req.body) {
             var requestBody = req.body;
@@ -60,9 +60,9 @@ restService.post('/webhook', function (req, res) {
                     }   
                     else if(requestBody.result.action == "getSpecialMenu")
                     {
-                        speech = "Today's special menu: 1) Chocolate Shake 2) Vanilla Shake";
+                        speech = "Today's special menu: 1) Blueberry Crush 2) Mojito";
                         slack_message = {
-                            "text": "Today's special menu: \n1) Chocolate Shake \n2) Vanilla Shake"
+                            "text": "Today's special menu: \n1) Blueberry Crush \n2) Mojito"
                         }  
                     }                  
                     data = {"slack": slack_message};
