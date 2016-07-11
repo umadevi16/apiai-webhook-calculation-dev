@@ -53,16 +53,16 @@ restService.post('/webhook', function (req, res) {
                     }    
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
-                        speech = "What can I get for you? 1) Tropical Crush 2) Lychee Crush 3) Mango Tango Crush 4) Lemon Crush";
+                        speech = "Main menu: * Tropical Crush * Lychee Crush * Mango Tango Crush * Lemon Crush";
                         slack_message = {
-                            "text": "What can I get for you? \n1) Tropical Crush \n2) Mango Tango Crush \n3) Lemon Crush \n4) Lychee Crush"
+                            "text": "Main menu: \n* Tropical Crush \n* Mango Tango Crush \n* Lemon Crush \n* Lychee Crush"
                         }                        
                     }   
                     else if(requestBody.result.action == "getSpecialMenu")
                     {
-                        speech = "Today's special menu: 1) Blueberry Crush 2) Mojito";
+                        speech = "Today's special menu: * Blueberry Crush * Mojito";
                         slack_message = {
-                            "text": "Today's special menu: \n1) Blueberry Crush \n2) Mojito"
+                            "text": "Today's special menu: \n* Blueberry Crush \n* Mojito"
                         }  
                     }                  
                     data = {"slack": slack_message};
