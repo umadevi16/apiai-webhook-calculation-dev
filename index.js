@@ -15,8 +15,41 @@ restService.post('/webhook', function (req, res) {
         var speech = 'empty speech';
         var data = {};
         var slack_message = {};
-        var drinkItems = {"Tropical Crush": "10", "Mango Tango Crush": "8","Lemon Crush": "6","Lychee Crush": "9"}; 
-        var specialItems = {"Blueberry Crush": "15", "Mojito": "6"};
+
+        var menu = [
+            {
+                "name": "Tropical Crush",
+                "price": "10",
+                "isSpecial": false
+            },
+            {
+                 "name": "Mango Tango Crush",
+                "price": "8",
+                "isSpecial": false
+            },
+            {
+                 "name": "Lemon Crush",
+                "price": "6",
+                "isSpecial": false
+            },
+            {
+                 "name": "Lychee Crush",
+                "price": "9",
+                "isSpecial": false
+            },
+            ,
+            {
+                 "name": "Blueberry Crush",
+                "price": "15",
+                "isSpecial": true
+            },
+            ,
+            {
+                 "name": "Mojito",
+                "price": "12",
+                "isSpecial": true
+            }
+        ];
 
         if (req.body) {
             var requestBody = req.body;
@@ -38,12 +71,12 @@ restService.post('/webhook', function (req, res) {
                         var drinkname =requestBody.result.parameters.name;
                         var cost = 0;
 
-                        if(drinkname in drinkItems){
-                            cost = quantity * parseInt(drinkItems[drinkname]);
+                        menu.forEach(function(drinks) {
+                            if(drinkname == drinks.name){
+                            cost = quantity * parseInt(drinks.price);
                         }
-                        else {
-                            cost = quantity * parseInt(specialItems[drinkname]);
-                        }
+                        }, this);
+                        
                         
                         var msg = "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?";
                         speech = msg;
@@ -53,9 +86,9 @@ restService.post('/webhook', function (req, res) {
                     }    
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
-                        speech = "Main menu: * Tropical Crush * Lychee Crush * Mango Tango Crush * Lemon Crush";
+                        speech = "Main menu: * Tropical Crush * Lychee Crush * Mango Tango Crush * Lemon Crush Today's special menu: * Blueberry Crush * Mojito";
                         slack_message = {
-                            "text": "Main menu: \n* Tropical Crush \n* Mango Tango Crush \n* Lemon Crush \n* Lychee Crush"
+                            "text": "Main menu: \n* Tropical Crush \n* Mango Tango Crush \n* Lemon Crush \n* Lychee Crush \nToday's special menu: \n* Blueberry Crush \n* Mojito"
                         }                        
                     }   
                     else if(requestBody.result.action == "getSpecialMenu")
