@@ -94,6 +94,29 @@ restService.post('/webhook', function (req, res) {
                         }
                         
                     }    
+                    else if(requestBody.result.action == "getTotalCostMultiple")
+                    {
+                        var quantity1 = parseInt(requestBody.result.parameters.number1);
+                        var ice1 = requestBody.result.parameters.ice1;
+                        var ingredients1 =requestBody.result.parameters.ingredients1;
+                        var drinkname1 =requestBody.result.parameters.name1;
+                        var quantity2 = parseInt(requestBody.result.parameters.number2);
+                        var ice2 = requestBody.result.parameters.ice2;
+                        var ingredients2 =requestBody.result.parameters.ingredients2;
+                        var drinkname2 =requestBody.result.parameters.name2;
+                        var cost = 0;
+
+                        menu.forEach(function(drinks) {
+                            if(drinkname1 == drinks.name || drinkname2 == drinks.name){
+                            cost += quantity * parseInt(drinks.price);
+                        }
+                        }, this);
+                        
+                        speech = "So, your order is "+ quantity1 +" "+ drinkname1 +" with "+ ingredients1 + " ingredient and "+ ice1 + " ice and "+ quantity2 +" "+ drinkname2 +" with "+ ingredients2 + " ingredient and "+ ice2 + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?";
+                        slack_message = {
+                            "text": "So, your order is "+ quantity1 +" "+ drinkname1 +" with "+ ingredients1 + " ingredient and "+ ice1 + " ice and "+ quantity2 +" "+ drinkname2 +" with "+ ingredients2 + " ingredient and "+ ice2 + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
+                        }
+                    }
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
                         speech = "Main menu: * Strawberry Basil Soda * Cucumber Gimlet * The Bright & Bitter * Blueberry Hard Lemonade Today's special menu: * Bubbly Lemonade * Mojito";
