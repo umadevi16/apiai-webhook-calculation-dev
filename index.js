@@ -107,8 +107,11 @@ restService.post('/webhook', function (req, res) {
                         var cost = 0;
 
                         menu.forEach(function(drinks) {
-                            if(drinkname1 == drinks.name || drinkname2 == drinks.name){
-                            cost += quantity * parseInt(drinks.price);
+                            if(drinkname1 == drinks.name) {
+                            cost += quantity1 * parseInt(drinks.price);
+                        }
+                        else if(drinkname2 == drinks.name) {
+                             cost += quantity2 * parseInt(drinks.price);
                         }
                         }, this);
                         
