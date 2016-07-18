@@ -18,28 +18,28 @@ restService.post('/webhook', function (req, res) {
 
         var menu = [
             {
-                "name": "Tropical Crush",
+                "name": "Strawberry Basil Soda",
                 "price": "10",
                 "isSpecial": false
             },
             {
-                 "name": "Mango Tango Crush",
+                 "name": "Cucumber Gimlet",
                 "price": "8",
                 "isSpecial": false
             },
             {
-                 "name": "Lemon Crush",
+                 "name": "The Bright & Bitter",
                 "price": "6",
                 "isSpecial": false
             },
             {
-                 "name": "Lychee Crush",
+                 "name": "Blueberry Hard Lemonade",
                 "price": "9",
                 "isSpecial": false
             },
             ,
             {
-                 "name": "Blueberry Crush",
+                 "name": "Bubbly Lemonade",
                 "price": "15",
                 "isSpecial": true
             },
@@ -63,7 +63,7 @@ restService.post('/webhook', function (req, res) {
                 }
 
                 if (requestBody.result.action) {
-                    if(requestBody.result.action == "getTotalCost")
+                    if(requestBody.result.action == "getTotalCost" || requestBody.result.action == "reorderTotalCost")
                     {
                         var quantity = parseInt(requestBody.result.parameters.number);
                         var ice = requestBody.result.parameters.ice;
@@ -78,24 +78,34 @@ restService.post('/webhook', function (req, res) {
                         }, this);
                         
                         
-                        var msg = "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?";
-                        speech = msg;
-                        slack_message = {
-                            "text": "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
+                        if(requestBody.result.action == "getTotalCost")
+                        {
+                            speech = "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?";
+                            slack_message = {
+                                "text": "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
+                            }
                         }
+                        else if(requestBody.result.action == "reorderTotalCost")
+                        {
+                            speech = "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?";                            
+                            slack_message = {
+                                "text": "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
+                            }
+                        }
+                        
                     }    
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
-                        speech = "Main menu: * Tropical Crush * Lychee Crush * Mango Tango Crush * Lemon Crush Today's special menu: * Blueberry Crush * Mojito";
+                        speech = "Main menu: * Strawberry Basil Soda * Cucumber Gimlet * The Bright & Bitter * Blueberry Hard Lemonade Today's special menu: * Bubbly Lemonade * Mojito";
                         slack_message = {
-                            "text": "Main menu: \n* Tropical Crush \n* Mango Tango Crush \n* Lemon Crush \n* Lychee Crush \nToday's special menu: \n* Blueberry Crush \n* Mojito"
+                            "text": "Main menu: \n* Strawberry Basil Soda \n* Cucumber Gimlet \n* The Bright & Bitter \n* Blueberry Hard Lemonade \nToday's special menu: \n* Bubbly Lemonade \n* Mojito"
                         }                        
                     }   
                     else if(requestBody.result.action == "getSpecialMenu")
                     {
-                        speech = "Today's special menu: * Blueberry Crush * Mojito";
+                        speech = "Today's special menu: * Bubbly Lemonade * Mojito";
                         slack_message = {
-                            "text": "Today's special menu: \n* Blueberry Crush \n* Mojito"
+                            "text": "Today's special menu: \n* Bubbly Lemonade \n* Mojito"
                         }  
                     }                  
                     data = {"slack": slack_message};
