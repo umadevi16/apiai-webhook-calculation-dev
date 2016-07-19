@@ -64,7 +64,7 @@ restService.post('/webhook', function (req, res) {
 
                 if (requestBody.result.action) {
                     if(requestBody.result.action == "getTotalCost" || requestBody.result.action == "reorderTotalCost")
-                    {
+                    {                        
                         var quantity = parseInt(requestBody.result.parameters.number);
                         var ice = requestBody.result.parameters.ice;
                         var ingredients =requestBody.result.parameters.ingredients;
@@ -80,16 +80,16 @@ restService.post('/webhook', function (req, res) {
                         
                         if(requestBody.result.action == "getTotalCost")
                         {
-                            speech = "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?";
+                            speech = "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?";
                             slack_message = {
-                                "text": "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
+                                "text": "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?"
                             }
                         }
                         else if(requestBody.result.action == "reorderTotalCost")
                         {
-                            speech = "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?";                            
+                            speech = "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I repeat same?";                            
                             slack_message = {
-                                "text": "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
+                                "text": "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I repeat same?"
                             }
                         }
                         
