@@ -123,9 +123,59 @@ restService.post('/webhook', function (req, res) {
                     else if(requestBody.result.action == "help")
                     {
                         speech = "Hi, here are some example tasks that you can ask me to do: **See menu by saying: *I want to see menu *What is special today? *I want to order a drink **Or simply order a drink from menu by saying: *I want 2 mojito. *Get me 1 strawberry basil soda. **Confirm or update your drink order: *I wanna update my order. *I want to change drink to blueberry hard lemonade. *update ingredients *update ice quantity **Repeat order";
-                        slack_message = {
-                            "text": "Hi, here are some example tasks that you can ask me to do:\n\nSee menu by saying:\nI want to see menu\nWhat is special today?\nI want to order a drink\n\nOr simply order a drink from menu by saying:\nI want 2 mojito.\nGet me 1 strawberry basil soda.\n\nConfirm or update your drink order:\nI wanna update my order.\nI want to change drink to blueberry hard lemonade.\nupdate ingredients\nupdate ice quantity\n\nRepeat order"
-                        }                        
+                        //slack_message = {
+                        //    "text": "Hi, here are some example tasks that you can ask me to do:\n\nSee menu by saying:\nI want to see menu\nWhat is special today?\nI want to order a drink\n\nOr simply order a drink from menu by saying:\nI want 2 mojito.\nGet me 1 strawberry basil soda.\n\nConfirm or update your drink order:\nI wanna update my order.\nI want to change drink to blueberry hard lemonade.\nupdate ingredients\nupdate ice quantity\n\nRepeat order"
+                        //}
+                         {
+                            "text": "Now back in stock! :tada:",
+                            "attachments": [
+                                {
+                                    "title": "The Further Adventures of Slackbot",
+                                    "author_name": "Stanford S. Strickland",
+                                    "author_icon": "https://api.slack.com/img/api/homepage_custom_integrations-2x.png",
+                                    "image_url": "http://i.imgur.com/OJkaVOI.jpg?1"
+                                },
+                                {
+                                    "fields": [
+                                        {
+                                            "title": "Volume",
+                                            "value": "1",
+                                            "short": true
+                                        },
+                                        {
+                                            "title": "Issue",
+                                            "value": "3",
+                                            "short": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "Sypnopsis",
+                                    "text": "After @episod pushed exciting changes to a devious new branch back in Issue 1, Slackbot notifies @don about an unexpected deploy..."
+                                },
+                                {
+                                    "fallback": "Would you recommend it to customers?",
+                                    "title": "Would you recommend it to customers?",
+                                    "callback_id": "comic_1234_xyz",
+                                    "color": "#3AA3E3",
+                                    "attachment_type": "default",
+                                    "actions": [
+                                        {
+                                            "name": "recommend",
+                                            "text": "Recommend",
+                                            "type": "button",
+                                            "value": "recommend"
+                                        },
+                                        {
+                                            "name": "no",
+                                            "text": "No",
+                                            "type": "button",
+                                            "value": "bad"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
                     } 
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
