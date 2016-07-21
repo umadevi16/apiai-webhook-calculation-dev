@@ -138,41 +138,31 @@ restService.post('/webhook', function (req, res) {
                                 {
                                     "fields": [
                                         {
-                                            "title": "Volume",
-                                            "value": "1",
+                                            "title": "Quantity",
+                                            "value": "10",
                                             "short": true
                                         },
                                         {
-                                            "title": "Issue",
-                                            "value": "3",
+                                            "title": "Gratuity",
+                                            "value": "10%",
+                                            "short": true
+                                        },
+                                        {
+                                            "title": "Order Total",
+                                            "value": "$100",
                                             "short": true
                                         }
                                     ]
                                 },
                                 {
-                                    "title": "Sypnopsis",
-                                    "text": "After @episod pushed exciting changes to a devious new branch back in Issue 1, Slackbot notifies @don about an unexpected deploy..."
+                                    "text": "So, your order is Strawberry Basil Soda with lemon slices ingredient and low ice."
                                 },
                                 {
-                                    "fallback": "Would you recommend it to customers?",
-                                    "title": "Would you recommend it to customers?",
+                                    "fallback": "Should I confirm?",
+                                    "title": "Should I confirm?",
                                     "callback_id": "comic_1234_xyz",
                                     "color": "#3AA3E3",
                                     "attachment_type": "default",
-                                    "actions": [
-                                        {
-                                            "name": "recommend",
-                                            "text": "Recommend",
-                                            "type": "button",
-                                            "value": "recommend"
-                                        },
-                                        {
-                                            "name": "no",
-                                            "text": "No",
-                                            "type": "button",
-                                            "value": "bad"
-                                        }
-                                    ]
                                 }
                             ]
                         }
