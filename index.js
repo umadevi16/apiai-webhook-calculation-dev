@@ -130,6 +130,9 @@ restService.post('/webhook', function (req, res) {
                             "text": "So, your order is Strawberry Basil Soda with lemon slices ingredient and low ice including taxes & 10% gratuity. ! :cocktail:",
                             "attachments": [
                                 {
+                                    "title": "The Further Adventures of Slackbot",
+                                    "author_name": "Stanford S. Strickland",
+                                    "author_icon": "https://api.slack.com/img/api/homepage_custom_integrations-2x.png",
                                     "image_url": "http://i.imgur.com/OJkaVOI.jpg?1"
                                 },
                                 {
