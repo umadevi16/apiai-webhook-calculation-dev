@@ -127,12 +127,9 @@ restService.post('/webhook', function (req, res) {
                         //    "text": "Hi, here are some example tasks that you can ask me to do:\n\nSee menu by saying:\nI want to see menu\nWhat is special today?\nI want to order a drink\n\nOr simply order a drink from menu by saying:\nI want 2 mojito.\nGet me 1 strawberry basil soda.\n\nConfirm or update your drink order:\nI wanna update my order.\nI want to change drink to blueberry hard lemonade.\nupdate ingredients\nupdate ice quantity\n\nRepeat order"
                         //}
                         slack_message = {
-                            "text": "Now back in stock! :tada:",
+                            "text": "So, your order is Strawberry Basil Soda with lemon slices ingredient and low ice including taxes & 10% gratuity. ! :cocktail:",
                             "attachments": [
                                 {
-                                    "title": "The Further Adventures of Slackbot",
-                                    "author_name": "Stanford S. Strickland",
-                                    "author_icon": "https://api.slack.com/img/api/homepage_custom_integrations-2x.png",
                                     "image_url": "http://i.imgur.com/OJkaVOI.jpg?1"
                                 },
                                 {
@@ -143,19 +140,11 @@ restService.post('/webhook', function (req, res) {
                                             "short": true
                                         },
                                         {
-                                            "title": "Gratuity",
-                                            "value": "10%",
-                                            "short": true
-                                        },
-                                        {
                                             "title": "Order Total",
                                             "value": "$100",
                                             "short": true
                                         }
                                     ]
-                                },
-                                {
-                                    "text": "So, your order is Strawberry Basil Soda with lemon slices ingredient and low ice."
                                 },
                                 {
                                     "fallback": "Should I confirm?",
