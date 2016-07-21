@@ -126,7 +126,7 @@ restService.post('/webhook', function (req, res) {
                         //slack_message = {
                         //    "text": "Hi, here are some example tasks that you can ask me to do:\n\nSee menu by saying:\nI want to see menu\nWhat is special today?\nI want to order a drink\n\nOr simply order a drink from menu by saying:\nI want 2 mojito.\nGet me 1 strawberry basil soda.\n\nConfirm or update your drink order:\nI wanna update my order.\nI want to change drink to blueberry hard lemonade.\nupdate ingredients\nupdate ice quantity\n\nRepeat order"
                         //}
-                         {
+                        slack_message = {
                             "text": "Now back in stock! :tada:",
                             "attachments": [
                                 {
