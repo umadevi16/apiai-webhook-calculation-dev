@@ -97,8 +97,9 @@ restService.post('/webhook', function (req, res) {
                             "text": "You have ordered: ",
                             "attachments": [
                                 {
-                                    "text": drinkname + "with " + ingredients + " and " + ice + " ice" + "\nQuantity: " + quantity + "\nCost: $" + cost,
-                                    "thumb_url": image_url
+                                    "text": "*" + drinkname + "* with _" + ingredients + "_ ingredients and _" + ice + "_ ice" + "\nQuantity: " + quantity + "\nCost: $" + cost,
+                                    "thumb_url": image_url,
+                                    "mrkdwn_in": ["text"]
                                 },
                                 {
                                     "fallback": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
@@ -120,8 +121,9 @@ restService.post('/webhook', function (req, res) {
                             "text": "Your last order was: ",
                             "attachments": [
                                 {
-                                    "text": drinkname + "with " + ingredients + " and " + ice + " ice" + "\nQuantity: " + quantity + "\nCost: $" + cost,
-                                    "thumb_url": image_url
+                                    "text": "*" + drinkname + "* with _" + ingredients + "_ ingredients and _" + ice + "_ ice" + "\nQuantity: " + quantity + "\nCost: $" + cost,
+                                    "thumb_url": image_url,
+                                    "mrkdwn_in": ["text"]
                                 },
                                 {
                                     "fallback": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I repeat same?",
@@ -169,12 +171,14 @@ restService.post('/webhook', function (req, res) {
                             "text": "You have ordered: ",
                             "attachments": [
                                 {
-                                    "text": drinkname1 + "with " + ingredients1 + " and " + ice1 + " ice" + "\nQuantity: " + quantity1 + "\nCost: $" + cost1,
-                                    "thumb_url": image_url1
+                                    "text": "*" + drinkname1 + "* with _" + ingredients1 + "_ ingredients and _" + ice1 + "_ ice" + "\nQuantity: " + quantity1 + "\nCost: $" + cost1,
+                                    "thumb_url": image_url1,
+                                    "mrkdwn_in": ["text"]
                                 },
                                 {
-                                    "text": drinkname2 + "with " + ingredients2 + " and " + ice2 + " ice" + "\nQuantity: " + quantity2 + "\nCost: $" + cost2,
-                                    "thumb_url": image_url2
+                                    "text": "*" + drinkname2 + "* with _" + ingredients2 + "_ ingredients and _" + ice2 + "_ ice" + "\nQuantity: " + quantity2 + "\nCost: $" + cost2,
+                                    "thumb_url": image_url2,
+                                    "mrkdwn_in": ["text"]
                                 },
                                 {
                                     "fallback": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
