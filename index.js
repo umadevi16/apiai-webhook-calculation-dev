@@ -85,10 +85,11 @@ restService.post('/webhook', function (req, res) {
                         }
                         }, this);
                         
+                        var grandTotal = cost + (.1 * cost);
                         
                         if(requestBody.result.action == "getTotalCost")
                         {
-                            speech = "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?";
+                            speech = "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" + grandTotal +" including taxes & 10% gratuity. Should I confirm?";
                             //slack_message = {
                             //    "text": "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?"
                             //}
@@ -96,26 +97,12 @@ restService.post('/webhook', function (req, res) {
                             "text": "You have ordered: " + drinkname + ":cocktail:",
                             "attachments": [
                                 {
-                                    "text": "",
-                                    "image_url": image_url
+                                    "text": drinkname + "\nQuantity: " + quantity + "\nCost: $" + cost,
+                                    "thumb_url": image_url
                                 },
                                 {
-                                    "fields": [
-                                        {
-                                            "title": "Quantity",
-                                            "value": quantity,
-                                            "short": true
-                                        },
-                                        {
-                                            "title": "Order Total",
-                                            "value": "$" + cost + " (including 10% gratuity)",
-                                            "short": true
-                                        }
-                                    ]
-                                },
-                                {
-                                    "fallback": "Should I confirm?",
-                                    "title": "Should I confirm?",
+                                    "fallback": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
+                                    "title": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
                                     "callback_id": "comic_1234_xyz",
                                     "color": "#3AA3E3",
                                     "attachment_type": "default",
@@ -125,34 +112,20 @@ restService.post('/webhook', function (req, res) {
                         }
                         else if(requestBody.result.action == "reorderTotalCost")
                         {
-                            speech = "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I repeat same?";                            
+                            speech = "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" + grandTotal +" including taxes & 10% gratuity. Should I repeat same?";                            
                             //slack_message = {
                             //    "text": "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I repeat same?"
                             //}
                             slack_message = {
-                            "text": "Your last order was: " + drinkname + ":cocktail:",
+                            "text": "Your last order was: ",
                             "attachments": [
                                 {
-                                    "text": "",
-                                    "image_url": image_url
+                                    "text": drinkname + "\nQuantity: " + quantity + "\nCost: $" + cost,
+                                    "thumb_url": image_url
                                 },
                                 {
-                                    "fields": [
-                                        {
-                                            "title": "Quantity",
-                                            "value": quantity,
-                                            "short": true
-                                        },
-                                        {
-                                            "title": "Order Total",
-                                            "value": "$" + cost + " (including 10% gratuity)",
-                                            "short": true
-                                        }
-                                    ]
-                                },
-                                {
-                                    "fallback": "Should I repeat same?",
-                                    "title": "Should I repeat same?",
+                                    "fallback": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I repeat same?",
+                                    "title": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I repeat same?",
                                     "callback_id": "comic_1234_xyz",
                                     "color": "#3AA3E3",
                                     "attachment_type": "default",
@@ -172,20 +145,45 @@ restService.post('/webhook', function (req, res) {
                         var ice2 = requestBody.result.parameters.ice2;
                         var ingredients2 =requestBody.result.parameters.ingredients2;
                         var drinkname2 =requestBody.result.parameters.name2;
-                        var cost = 0;
+                        var cost1 = 0;
+                        var cost2 = 0;
+                        var image_url1 = "";
+                        var image_url2 = "";
 
                         menu.forEach(function(drinks) {
                             if(drinkname1 == drinks.name) {
-                            cost += quantity1 * parseInt(drinks.price);
+                            cost1 += quantity1 * parseInt(drinks.price);
+                            image_url1 = drinks.image_url;
                         }
                         else if(drinkname2 == drinks.name) {
-                             cost += quantity2 * parseInt(drinks.price);
+                             cost2 += quantity2 * parseInt(drinks.price);
+                             image_url2 = drinks.image_url;
                         }
                         }, this);
+
+                        var totalCost = cost1 + cost2;
+                        var grandTotal = totalCost + (.1 * totalCost);
                         
-                        speech = "So, your order is "+ quantity1 +" "+ drinkname1 +" with "+ ingredients1 + " ingredient and "+ ice1 + " ice and "+ quantity2 +" "+ drinkname2 +" with "+ ingredients2 + " ingredient and "+ ice2 + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?";
+                        speech = "So, your order is "+ quantity1 +" "+ drinkname1 +" with "+ ingredients1 + " ingredient and "+ ice1 + " ice and "+ quantity2 +" "+ drinkname2 +" with "+ ingredients2 + " ingredient and "+ ice2 + " ice. This would be a total of "+"$" + grandTotal +" including taxes & 10% gratuity. Should I confirm?";
                         slack_message = {
-                            "text": "So, your order is "+ quantity1 +" "+ drinkname1 +" with "+ ingredients1 + " ingredient and "+ ice1 + " ice and "+ quantity2 +" "+ drinkname2 +" with "+ ingredients2 + " ingredient and "+ ice2 + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?"
+                            "text": "You have ordered: " + drinkname + ":cocktail:",
+                            "attachments": [
+                                {
+                                    "text": drinkname1 + "\nQuantity: " + quantity1 + "\nCost: $" + cost1,
+                                    "thumb_url": image_url1
+                                },
+                                {
+                                    "text": drinkname2 + "\nQuantity: " + quantity2 + "\nCost: $" + cost2,
+                                    "thumb_url": image_url2
+                                },
+                                {
+                                    "fallback": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
+                                    "title": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
+                                    "callback_id": "comic_1234_xyz",
+                                    "color": "#3AA3E3",
+                                    "attachment_type": "default",
+                                }
+                            ]
                         }
                     }
                     else if(requestBody.result.action == "help")
