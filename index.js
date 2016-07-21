@@ -94,7 +94,7 @@ restService.post('/webhook', function (req, res) {
                             //    "text": "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?"
                             //}
                             slack_message = {
-                            "text": "You have ordered: " + drinkname + ":cocktail:",
+                            "text": "You have ordered: ",
                             "attachments": [
                                 {
                                     "text": drinkname + "\nQuantity: " + quantity + "\nCost: $" + cost,
@@ -166,7 +166,7 @@ restService.post('/webhook', function (req, res) {
                         
                         speech = "So, your order is "+ quantity1 +" "+ drinkname1 +" with "+ ingredients1 + " ingredient and "+ ice1 + " ice and "+ quantity2 +" "+ drinkname2 +" with "+ ingredients2 + " ingredient and "+ ice2 + " ice. This would be a total of "+"$" + grandTotal +" including taxes & 10% gratuity. Should I confirm?";
                         slack_message = {
-                            "text": "You have ordered: " + drinkname + ":cocktail:",
+                            "text": "You have ordered: ",
                             "attachments": [
                                 {
                                     "text": drinkname1 + "\nQuantity: " + quantity1 + "\nCost: $" + cost1,
