@@ -20,33 +20,39 @@ restService.post('/webhook', function (req, res) {
             {
                 "name": "Strawberry Basil Soda",
                 "price": "10",
+                "image_url": "http://atmedia.imgix.net/51908962be2e4dbae14b488de63831c7e57a86a9",
                 "isSpecial": false
             },
             {
                  "name": "Cucumber Gimlet",
                 "price": "8",
+                "image_url": "http://assets.epicurious.com/photos/560dd770f3a00aeb2f1d27b2/master/pass/235327.jpg",
                 "isSpecial": false
             },
             {
                  "name": "The Bright & Bitter",
                 "price": "6",
+                "image_url": "https://716f24d81edeb11608aa-99aa5ccfecf745e7cf976b37d172ce54.ssl.cf1.rackcdn.com/the-bright--bitter-1280924l1.jpg",
                 "isSpecial": false
             },
             {
                  "name": "Blueberry Hard Lemonade",
                 "price": "9",
+                "image_url": "http://4.bp.blogspot.com/-JcwBEm9JNlU/T_ZMDfE6FGI/AAAAAAAABA8/N5IFoJCqWXc/s1600/blueberrylemonade4.jpg",
                 "isSpecial": false
             },
             ,
             {
                  "name": "Bubbly Lemonade",
                 "price": "15",
+                "image_url": "http://www.bakespace.com/images/large/d4523ab8582819b31e6f2e7e0147b2ab.jpeg",
                 "isSpecial": true
             },
             ,
             {
                  "name": "Mojito",
                 "price": "12",
+                "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTdVYlA2iLCpBGiucUN6KYQGuJWPH8EcDZShNx1-LqZIcs9ZqgONg",
                 "isSpecial": true
             }
         ];
@@ -70,10 +76,12 @@ restService.post('/webhook', function (req, res) {
                         var ingredients =requestBody.result.parameters.ingredients;
                         var drinkname =requestBody.result.parameters.name;
                         var cost = 0;
+                        var image_url = "";
 
                         menu.forEach(function(drinks) {
                             if(drinkname == drinks.name){
                             cost = quantity * parseInt(drinks.price);
+                            image_url = drinks.image_url;
                         }
                         }, this);
                         
@@ -81,16 +89,76 @@ restService.post('/webhook', function (req, res) {
                         if(requestBody.result.action == "getTotalCost")
                         {
                             speech = "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?";
+                            //slack_message = {
+                            //    "text": "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?"
+                            //}
                             slack_message = {
-                                "text": "So, your order is "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?"
-                            }
+                            "text": "You have ordered: " + drinkname + ":cocktail:",
+                            "attachments": [
+                                {
+                                    "text": "",
+                                    "image_url": image_url
+                                },
+                                {
+                                    "fields": [
+                                        {
+                                            "title": "Quantity",
+                                            "value": quantity,
+                                            "short": true
+                                        },
+                                        {
+                                            "title": "Order Total",
+                                            "value": "$" + cost + " (including 10% gratuity)",
+                                            "short": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "fallback": "Should I confirm?",
+                                    "title": "Should I confirm?",
+                                    "callback_id": "comic_1234_xyz",
+                                    "color": "#3AA3E3",
+                                    "attachment_type": "default",
+                                }
+                            ]
+                        }
                         }
                         else if(requestBody.result.action == "reorderTotalCost")
                         {
                             speech = "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I repeat same?";                            
+                            //slack_message = {
+                            //    "text": "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I repeat same?"
+                            //}
                             slack_message = {
-                                "text": "Your last order was "+ quantity +" "+ drinkname +" with "+ ingredients + " ingredient and "+ ice + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I repeat same?"
-                            }
+                            "text": "Your last order was: " + drinkname + ":cocktail:",
+                            "attachments": [
+                                {
+                                    "text": "",
+                                    "image_url": image_url
+                                },
+                                {
+                                    "fields": [
+                                        {
+                                            "title": "Quantity",
+                                            "value": quantity,
+                                            "short": true
+                                        },
+                                        {
+                                            "title": "Order Total",
+                                            "value": "$" + cost + " (including 10% gratuity)",
+                                            "short": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "fallback": "Should I repeat same?",
+                                    "title": "Should I repeat same?",
+                                    "callback_id": "comic_1234_xyz",
+                                    "color": "#3AA3E3",
+                                    "attachment_type": "default",
+                                }
+                            ]
+                        }
                         }
                         
                     }    
@@ -115,47 +183,17 @@ restService.post('/webhook', function (req, res) {
                         }
                         }, this);
                         
-                        speech = "So, your order is "+ quantity1 +" "+ drinkname1 +" with "+ ingredients1 + " ingredient and "+ ice1 + " ice and "+ quantity2 +" "+ drinkname2 +" with "+ ingredients2 + " ingredient and "+ ice2 + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?";
+                        speech = "So, your order is "+ quantity1 +" "+ drinkname1 +" with "+ ingredients1 + " ingredient and "+ ice1 + " ice and "+ quantity2 +" "+ drinkname2 +" with "+ ingredients2 + " ingredient and "+ ice2 + " ice. This would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?";
                         slack_message = {
-                            "text": "So, your order is "+ quantity1 +" "+ drinkname1 +" with "+ ingredients1 + " ingredient and "+ ice1 + " ice and "+ quantity2 +" "+ drinkname2 +" with "+ ingredients2 + " ingredient and "+ ice2 + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should i confirm?"
+                            "text": "So, your order is "+ quantity1 +" "+ drinkname1 +" with "+ ingredients1 + " ingredient and "+ ice1 + " ice and "+ quantity2 +" "+ drinkname2 +" with "+ ingredients2 + " ingredient and "+ ice2 + " ice. \nThis would be a total of "+"$" +cost +" including taxes & 10% gratuity. Should I confirm?"
                         }
                     }
                     else if(requestBody.result.action == "help")
                     {
                         speech = "Hi, here are some example tasks that you can ask me to do: **See menu by saying: *I want to see menu *What is special today? *I want to order a drink **Or simply order a drink from menu by saying: *I want 2 mojito. *Get me 1 strawberry basil soda. **Confirm or update your drink order: *I wanna update my order. *I want to change drink to blueberry hard lemonade. *update ingredients *update ice quantity **Repeat order";
-                        //slack_message = {
-                        //    "text": "Hi, here are some example tasks that you can ask me to do:\n\nSee menu by saying:\nI want to see menu\nWhat is special today?\nI want to order a drink\n\nOr simply order a drink from menu by saying:\nI want 2 mojito.\nGet me 1 strawberry basil soda.\n\nConfirm or update your drink order:\nI wanna update my order.\nI want to change drink to blueberry hard lemonade.\nupdate ingredients\nupdate ice quantity\n\nRepeat order"
-                        //}
                         slack_message = {
-                            "text": "So, your order is Strawberry Basil Soda with lemon slices ingredient and low ice including taxes & 10% gratuity. ! :cocktail:",
-                            "attachments": [
-                                {
-                                    "text": "",
-                                    "image_url": "http://i.imgur.com/OJkaVOI.jpg?1"
-                                },
-                                {
-                                    "fields": [
-                                        {
-                                            "title": "Quantity",
-                                            "value": "10",
-                                            "short": true
-                                        },
-                                        {
-                                            "title": "Order Total",
-                                            "value": "$100",
-                                            "short": true
-                                        }
-                                    ]
-                                },
-                                {
-                                    "fallback": "Should I confirm?",
-                                    "title": "Should I confirm?",
-                                    "callback_id": "comic_1234_xyz",
-                                    "color": "#3AA3E3",
-                                    "attachment_type": "default",
-                                }
-                            ]
-                        }
+                            "text": "Hi, here are some example tasks that you can ask me to do:\n\nSee menu by saying:\nI want to see menu\nWhat is special today?\nI want to order a drink\n\nOr simply order a drink from menu by saying:\nI want 2 mojito.\nGet me 1 strawberry basil soda.\n\nConfirm or update your drink order:\nI wanna update my order.\nI want to change drink to blueberry hard lemonade.\nupdate ingredients\nupdate ice quantity\n\nRepeat order"
+                        }                        
                     } 
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
