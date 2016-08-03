@@ -114,7 +114,7 @@ restService.post('/webhook', function (req, res) {
                             
                             facebook_message = 
                             	 "message":{
-                                "text":"hello, world!"
+                                "text":"hello, world.!"
                             }
                        
                         }
