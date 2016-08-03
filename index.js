@@ -111,25 +111,48 @@ restService.post('/webhook', function (req, res) {
                                     "attachment_type": "default",
                                 }
                             ]
-                        }
+                            }
 
-			facebook_message =  {
-                            "text": "You have ordered: ",
-                            "attachments": [
-                                {
-                                    "text": "*" + drinkname + "* with _" + ingredients + "_ ingredients and _" + ice + "_ ice" + "\nQuantity: " + quantity + "\nCost: $" + cost,
-                                    "thumb_url": image_url,
-                                    "mrkdwn_in": ["text"]
-                                },
-                                {
-                                    "fallback": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
-                                    "title": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
-                                    "callback_id": "comic_1234_xyz",
-                                    "color": "#3AA3E3",
-                                    "attachment_type": "default",
-                                }
-                            ]
-                        }
+                            facebook_message = {
+                                    "attachment": {
+                                        "type": "template",
+                                        "payload": {
+                                            "template_type": "generic",
+                                            "elements": [
+                                                {
+                                                    "title": channel.get('title'),
+                                                    "image_url": "http://l.yimg.com/a/i/us/we/52/" + condition.get('code') + ".gif",
+                                                    "subtitle": speech,
+                                                    "buttons": [
+                                                        {
+                                                            "type": "web_url",
+                                                            "url": channel.get('link'),
+                                                            "title": "View Details"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                               }
+                            
+//                            facebook_message =  {
+//                            "text": "You have ordered: ",
+//                            "attachments": [
+//                                {
+//                                    "text": "*" + drinkname + "* with _" + ingredients + "_ ingredients and _" + ice + "_ ice" + "\nQuantity: " + quantity + "\nCost: $" + cost,
+//                                    "thumb_url": image_url,
+//                                    "mrkdwn_in": ["text"]
+//                                },
+//                                {
+//                                    "fallback": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
+//                                    "title": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
+//                                    "callback_id": "comic_1234_xyz",
+//                                    "color": "#3AA3E3",
+//                                    "attachment_type": "default",
+//                                }
+//                            ]
+//                        }
 
                         }
                         else if(requestBody.result.action == "reorderTotalCost")
@@ -153,10 +176,10 @@ restService.post('/webhook', function (req, res) {
                                     "color": "#3AA3E3",
                                     "attachment_type": "default",
                                 }
-                            ]
-                        }
+                                ]	
+                            }
 
-			facebook_message = {
+                            facebook_message = {
                             "text": "Your last order was: ",
                             "attachments": [
                                 {
@@ -206,6 +229,7 @@ restService.post('/webhook', function (req, res) {
                         var grandTotal = totalCost + (.1 * totalCost);
                         
                         speech = "So, your order is "+ quantity1 +" "+ drinkname1 +" with "+ ingredients1 + " ingredient and "+ ice1 + " ice and "+ quantity2 +" "+ drinkname2 +" with "+ ingredients2 + " ingredient and "+ ice2 + " ice. This would be a total of "+"$" + grandTotal +" including taxes & 10% gratuity. Should I confirm?";
+                        
                         slack_message = {
                             "text": "You have ordered: ",
                             "attachments": [
@@ -227,9 +251,9 @@ restService.post('/webhook', function (req, res) {
                                     "attachment_type": "default",
                                 }
                             ]
-                        }
+                        }                 
 
- 			facebook_message = {
+                        facebook_message = {
                             "text": "You have ordered: ",
                             "attachments": [
                                 {
@@ -259,7 +283,7 @@ restService.post('/webhook', function (req, res) {
                             "text": "Hi, here are some example tasks that you can ask me to do:\n\nSee menu by saying:\nI want to see menu\nWhat is special today?\nI want to order a drink\n\nOr simply order a drink from menu by saying:\nI want 2 mojito.\nGet me 1 strawberry basil soda.\n\nConfirm or update your drink order:\nI wanna update my order.\nI want to change drink to blueberry hard lemonade.\nupdate ingredients\nupdate ice quantity\n\nRepeat order"
                         }    
 
- 			facebook_message = {
+                        facebook_message = {
                             "text": "Hi, here are some example tasks that you can ask me to do:\n\nSee menu by saying:\nI want to see menu\nWhat is special today?\nI want to order a drink\n\nOr simply order a drink from menu by saying:\nI want 2 mojito.\nGet me 1 strawberry basil soda.\n\nConfirm or update your drink order:\nI wanna update my order.\nI want to change drink to blueberry hard lemonade.\nupdate ingredients\nupdate ice quantity\n\nRepeat order"
                         }                        
                     } 
@@ -270,7 +294,7 @@ restService.post('/webhook', function (req, res) {
                             "text": "Main menu: \n* Strawberry Basil Soda \n* Cucumber Gimlet \n* The Bright & Bitter \n* Blueberry Hard Lemonade \nToday's special menu: \n* Bubbly Lemonade \n* Mojito"
                         }     
 
-			facebook_message = {
+                        facebook_message = {
                             "text": "Main menu: \n* Strawberry Basil Soda \n* Cucumber Gimlet \n* The Bright & Bitter \n* Blueberry Hard Lemonade \nToday's special menu: \n* Bubbly Lemonade \n* Mojito"
                         }                         
                     }                       
@@ -281,7 +305,7 @@ restService.post('/webhook', function (req, res) {
                             "text": "Today's special menu: \n* Bubbly Lemonade \n* Mojito"
                         }  
 
- 			facebook_message = {
+                        facebook_message = {
                             "text": "Today's special menu: \n* Bubbly Lemonade \n* Mojito"
                         }  
                     }                  
