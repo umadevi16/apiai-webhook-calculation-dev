@@ -15,6 +15,7 @@ restService.post('/webhook', function (req, res) {
         var speech = 'empty speech';
         var data = {};
         var slack_message = {};
+        var facebook_message = {};
         
         var menu = [
             {
@@ -221,7 +222,7 @@ restService.post('/webhook', function (req, res) {
                             "text": "Today's special menu: \n* Bubbly Lemonade \n* Mojito"
                         }  
                     }                  
-                    data = {"slack": slack_message};
+                    data = {"slack": slack_message, "facebook": facebook_message};
                 }
             }
         }
