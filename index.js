@@ -15,8 +15,7 @@ restService.post('/webhook', function (req, res) {
         var speech = 'empty speech';
         var data = {};
         var slack_message = {};
-        var facebook_message = {};
-
+        
         var menu = [
             {
                 "name": "Strawberry Basil Soda",
@@ -112,30 +111,7 @@ restService.post('/webhook', function (req, res) {
                                 }
                             ]
                             }
-
-                            facebook_message = {
-                            		"message":{
-                            		  	"text":"hello, world!"
-                            		  }
-                            
-//                            facebook_message =  {
-//                            "text": "You have ordered: ",
-//                            "attachments": [
-//                                {
-//                                    "text": "*" + drinkname + "* with _" + ingredients + "_ ingredients and _" + ice + "_ ice" + "\nQuantity: " + quantity + "\nCost: $" + cost,
-//                                    "thumb_url": image_url,
-//                                    "mrkdwn_in": ["text"]
-//                                },
-//                                {
-//                                    "fallback": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
-//                                    "title": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
-//                                    "callback_id": "comic_1234_xyz",
-//                                    "color": "#3AA3E3",
-//                                    "attachment_type": "default",
-//                                }
-//                            ]
-//                        }
-
+                       
                         }
                         else if(requestBody.result.action == "reorderTotalCost")
                         {
@@ -160,24 +136,7 @@ restService.post('/webhook', function (req, res) {
                                 }
                                 ]	
                             }
-
-                            facebook_message = {
-                            "text": "Your last order was: ",
-                            "attachments": [
-                                {
-                                    "text": "*" + drinkname + "* with _" + ingredients + "_ ingredients and _" + ice + "_ ice" + "\nQuantity: " + quantity + "\nCost: $" + cost,
-                                    "thumb_url": image_url,
-                                    "mrkdwn_in": ["text"]
-                                },
-                                {
-                                    "fallback": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I repeat same?",
-                                    "title": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I repeat same?",
-                                    "callback_id": "comic_1234_xyz",
-                                    "color": "#3AA3E3",
-                                    "attachment_type": "default",
-                                }
-                            ]
-                        }
+                           
                         }
                         
                     }    
@@ -234,51 +193,21 @@ restService.post('/webhook', function (req, res) {
                                 }
                             ]
                         }                 
-
-                        facebook_message = {
-                            "text": "You have ordered: ",
-                            "attachments": [
-                                {
-                                    "text": "*" + drinkname1 + "* with _" + ingredients1 + "_ ingredients and _" + ice1 + "_ ice" + "\nQuantity: " + quantity1 + "\nCost: $" + cost1,
-                                    "thumb_url": image_url1,
-                                    "mrkdwn_in": ["text"]
-                                },
-                                {
-                                    "text": "*" + drinkname2 + "* with _" + ingredients2 + "_ ingredients and _" + ice2 + "_ ice" + "\nQuantity: " + quantity2 + "\nCost: $" + cost2,
-                                    "thumb_url": image_url2,
-                                    "mrkdwn_in": ["text"]
-                                },
-                                {
-                                    "fallback": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
-                                    "title": "Your total order cost is $" + grandTotal + " (including taxes & 10% gratuity). Should I confirm?",
-                                    "callback_id": "comic_1234_xyz",
-                                    "color": "#3AA3E3",
-                                    "attachment_type": "default",
-                                }
-                            ]
-                        }
+                                                
                     }
                     else if(requestBody.result.action == "help")
                     {
                         speech = "Hi, here are some example tasks that you can ask me to do: **See menu by saying: *I want to see menu *What is special today? *I want to order a drink **Or simply order a drink from menu by saying: *I want 2 mojito. *Get me 1 strawberry basil soda. **Confirm or update your drink order: *I wanna update my order. *I want to change drink to blueberry hard lemonade. *update ingredients *update ice quantity **Repeat order";
                         slack_message = {
                             "text": "Hi, here are some example tasks that you can ask me to do:\n\nSee menu by saying:\nI want to see menu\nWhat is special today?\nI want to order a drink\n\nOr simply order a drink from menu by saying:\nI want 2 mojito.\nGet me 1 strawberry basil soda.\n\nConfirm or update your drink order:\nI wanna update my order.\nI want to change drink to blueberry hard lemonade.\nupdate ingredients\nupdate ice quantity\n\nRepeat order"
-                        }    
-
-                        facebook_message = {
-                            "text": "Hi, here are some example tasks that you can ask me to do:\n\nSee menu by saying:\nI want to see menu\nWhat is special today?\nI want to order a drink\n\nOr simply order a drink from menu by saying:\nI want 2 mojito.\nGet me 1 strawberry basil soda.\n\nConfirm or update your drink order:\nI wanna update my order.\nI want to change drink to blueberry hard lemonade.\nupdate ingredients\nupdate ice quantity\n\nRepeat order"
-                        }                        
+                        }                                                
                     } 
                     else if(requestBody.result.action == "getDrinksMenu")
                     {
                         speech = "Main menu: * Strawberry Basil Soda * Cucumber Gimlet * The Bright & Bitter * Blueberry Hard Lemonade Today's special menu: * Bubbly Lemonade * Mojito";
                         slack_message = {
                             "text": "Main menu: \n* Strawberry Basil Soda \n* Cucumber Gimlet \n* The Bright & Bitter \n* Blueberry Hard Lemonade \nToday's special menu: \n* Bubbly Lemonade \n* Mojito"
-                        }     
-
-                        facebook_message = {
-                            "text": "Main menu: \n* Strawberry Basil Soda \n* Cucumber Gimlet \n* The Bright & Bitter \n* Blueberry Hard Lemonade \nToday's special menu: \n* Bubbly Lemonade \n* Mojito"
-                        }                         
+                        }                                            
                     }                       
                     else if(requestBody.result.action == "getSpecialMenu")
                     {
@@ -286,12 +215,8 @@ restService.post('/webhook', function (req, res) {
                         slack_message = {
                             "text": "Today's special menu: \n* Bubbly Lemonade \n* Mojito"
                         }  
-
-                        facebook_message = {
-                            "text": "Today's special menu: \n* Bubbly Lemonade \n* Mojito"
-                        }  
                     }                  
-                    data = {"slack": slack_message, "facebook": facebook_message};
+                    data = {"slack": slack_message};
                 }
             }
         }
