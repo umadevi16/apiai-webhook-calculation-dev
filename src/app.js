@@ -40,7 +40,7 @@ function processEvent(event) {
 					facebook_user: userName
 				}
 				}
-            });
+			] });
         
         console.log("facebook_user", #generic.facebook_user);
 
